@@ -10,3 +10,4 @@ ChatGPT API利用時に機密情報となる名称が入力された場合、具
 ---
 
 ![PostGpt](/docs/PostGpt.png)
+
