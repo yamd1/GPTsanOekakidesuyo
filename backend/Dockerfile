@@ -21,13 +21,7 @@ WORKDIR /opt
 
 COPY package.json package-lock.json tsconfig.json tsconfig.compile.json .barrelsby.json ./
 
-
-RUN npm install
-
 COPY ./src ./src
-
-
-RUN npm run build
 
 FROM node:${NODE_VERSION}-alpine as runtime
 ENV WORKDIR /opt
@@ -38,12 +32,13 @@ RUN npm install -g pm2
 
 COPY --from=build /opt .
 
-RUN yarn install --pure-lockfile --production
+RUN npm ci
+RUN npm run build
 
 COPY processes.config.js .
 
-EXPOSE 8081
-ENV PORT 8081
-ENV NODE_ENV production
+EXPOSE 80
+ENV PORT 80
+ENV NODE_ENV develop
 
-CMD ["pm2-runtime", "start", "processes.config.js", "--env", "production"]
+CMD ["pm2-runtime", "start", "processes.config.js", "--env", "develop"]

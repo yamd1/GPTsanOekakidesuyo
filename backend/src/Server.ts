@@ -9,7 +9,7 @@ import * as rest from "./controllers/rest/index";
 @Configuration({
   ...config,
   acceptMimes: ["application/json"],
-  httpPort: process.env.PORT || 8083,
+  httpPort: process.env.PORT || 80,
   httpsPort: false, // CHANGE
   disableComponentsScan: true,
   mount: {

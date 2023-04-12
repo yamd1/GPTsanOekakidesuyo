@@ -1,0 +1,28 @@
+version: '3.5'
+
+networks:
+  backend:
+    driver: ${NETWORKS_DRIVER}
+
+volumes:
+  mysql:
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    ports:
+      - "8000:80"
+    privileged: true
+    volumes:
+      - .:/opt
+    tty: true
+    stdin_open: true
+    networks:
+      - backend
+
