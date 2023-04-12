@@ -10,8 +10,8 @@ volumes:
 services:
   server:
     build:
-      context: .
-      dockerfile: ./Dockerfile
+      context: ./server/
+      dockerfile: ./server/Dockerfile
       args:
         - http_proxy
         - https_proxy
@@ -20,7 +20,7 @@ services:
       - "8000:80"
     privileged: true
     volumes:
-      - .:/opt
+      - ./server:/opt
     tty: true
     stdin_open: true
     networks:
