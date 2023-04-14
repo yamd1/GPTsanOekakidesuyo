@@ -10,8 +10,7 @@ volumes:
 services:
   server:
     build:
-      context: ./server/
-      dockerfile: ./server/Dockerfile
+      context: ./server
       args:
         - http_proxy
         - https_proxy
@@ -27,18 +26,17 @@ services:
       - backend
 
   database:
-    build: .database/Dockerfile
-    args:
-      - MYSQL_VERSION=${MYSQL_VERSION}
+    build: 
+      context: ./database
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${PASSWORD}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - TZ=${TZ}
     volumes:
       - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
-      - ${MYSQL_ENTRYPOINT_INITDB}:docker-entrypoint-initdb.d
+      - ${MYSQL_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
     ports:
       - "${DATABASE_PORT}:3306"
     networks:
