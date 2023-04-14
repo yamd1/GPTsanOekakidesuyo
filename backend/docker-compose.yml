@@ -17,7 +17,7 @@ services:
         - https_proxy
         - no_proxy
     ports:
-      - "8000:80"
+      - "${SERVER_PORT}:80"
     privileged: true
     volumes:
       - ./server:/opt
@@ -25,4 +25,23 @@ services:
     stdin_open: true
     networks:
       - backend
+
+  database:
+    build: .database/Dockerfile
+    args:
+      - MYSQL_VERSION=${MYSQL_VERSION}
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - TZ=${TZ}
+    volumes:
+      - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
+      - ${MYSQL_ENTRYPOINT_INITDB}:docker-entrypoint-initdb.d
+    ports:
+      - "${DATABASE_PORT}:3306"
+    networks:
+      - backend
+
 
