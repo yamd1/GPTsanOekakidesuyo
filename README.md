@@ -1,12 +1,6 @@
-# SecureSwapGPT
+# GPTsanOekakidesuyo
 
-## 目的
-ChatGPT API利用時に機密情報となる名称が入力された場合、具体的な名称を特徴情報に変換することで、ChatGPTに学習されることを防ぐ  
-
-※例：「うどん」という文字が極秘裏に開発している商品の場合  
-入力値：うどんの作り方  
-変換後：白くて長く、そばよりも太い日本の麺類の作り方  
 
 ---
 
-![PostGpt](/docs/PostGpt.png)
+![GetTheme シーケンス図](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/yosky1011/GPTsanOekakidesuyo/docs/GetTheme.puml)
