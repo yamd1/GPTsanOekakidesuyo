@@ -33,7 +33,8 @@ import * as rest from "./controllers/rest/index";
   },
   exclude: [
     "**/*.spec.ts"
-  ]
+  ],
+  ajv: {}
 })
 export class Server {
   @Inject()
