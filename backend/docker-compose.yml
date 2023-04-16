@@ -9,6 +9,7 @@ volumes:
 
 services:
   server:
+    container_name: server
     build:
       context: ./server
       args:
@@ -26,6 +27,7 @@ services:
       - backend
 
   database:
+    container_name: database
     build: 
       context: ./database
     environment:
