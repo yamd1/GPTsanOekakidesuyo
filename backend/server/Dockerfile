@@ -37,6 +37,8 @@ RUN npm run build
 
 COPY processes.config.js .
 
+RUN chown -R 1000:1000 "/root/.npm"
+
 EXPOSE 80
 ENV PORT 80
 ENV NODE_ENV develop

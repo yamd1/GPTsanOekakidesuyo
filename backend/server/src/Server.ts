@@ -4,42 +4,42 @@ import {PlatformApplication} from "@tsed/common";
 import "@tsed/platform-express"; // /!\ keep this import
 import "@tsed/ajv";
 import {config} from "./config/index";
-import * as rest from "./controllers/rest/index";
+import * as controllers from "./controllers/index";
 
 @Configuration({
-  ...config,
-  acceptMimes: ["application/json"],
-  httpPort: process.env.PORT || 80,
-  httpsPort: false, // CHANGE
-  disableComponentsScan: true,
-  mount: {
-    "/rest": [
-      ...Object.values(rest)
-    ]
-  },
-  middlewares: [
-    "cors",
-    "cookie-parser",
-    "compression",
-    "method-override",
-    "json-parser",
-    { use: "urlencoded-parser", options: { extended: true }}
-  ],
-  views: {
-    root: join(process.cwd(), "../views"),
-    extensions: {
-      ejs: "ejs"
-    }
-  },
-  exclude: [
-    "**/*.spec.ts"
-  ],
-  ajv: {}
+    ...config,
+    acceptMimes: ["application/json"],
+    httpPort: process.env.PORT || 80,
+    httpsPort: false, // CHANGE
+    disableComponentsScan: true,
+    mount: {
+        "/rest": [
+            ...Object.values(controllers)
+        ]
+    },
+    middlewares: [
+        "cors",
+        "cookie-parser",
+        "compression",
+        "method-override",
+        "json-parser",
+        {use: "urlencoded-parser", options: {extended: true}}
+    ],
+    views: {
+        root: join(process.cwd(), "../views"),
+        extensions: {
+            ejs: "ejs"
+        }
+    },
+    exclude: [
+        "**/*.spec.ts"
+    ],
+    ajv: {}
 })
 export class Server {
-  @Inject()
-  protected app: PlatformApplication;
+    @Inject()
+    protected app: PlatformApplication;
 
-  @Configuration()
-  protected settings: Configuration;
+    @Configuration()
+    protected settings: Configuration;
 }

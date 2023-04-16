@@ -10,25 +10,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Themes {
+model themes {
   id         Int       @id @default(autoincrement())
   theme      String
   created_at DateTime  @default(now())
   updated_at DateTime?
 }
 
-model Sessions {
+model sessions {
   id         Int        @id @default(autoincrement())
   name       String
   created_at DateTime   @default(now())
   updated_at DateTime?
-  Messages   Messages[]
+  Messages   messages[]
 }
 
-model Messages {
+model messages {
   id          Int       @id @default(autoincrement())
   message     String
-  sessions    Sessions  @relation(fields: [sessions_id], references: [id])
+  sessions    sessions  @relation(fields: [sessions_id], references: [id])
   sessions_id Int
   created_at  DateTime  @default(now())
   updated_at  DateTime?
