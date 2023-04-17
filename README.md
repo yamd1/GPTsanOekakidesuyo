@@ -17,7 +17,7 @@
 
 | エンドポイント | リクエストタイプ | パラメーター | レスポンス |
 |--------------|--------------|-----------|---------|
-| `/themes` | `GET` | `` | `{<br> "getThemes" : [ <br> "id": number,<br> "theme": string, <br> "created_at": Date, <br> "updated_at": Date, <br>]<br>}` |
+| `/themes` | `GET` | `` | {<br> "getThemes" : [ <br> "id": number,<br> "theme": string, <br> "created_at": Date, <br> "updated_at": Date, <br>]<br>} |
 
 ### Sessions
 
