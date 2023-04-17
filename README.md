@@ -23,8 +23,8 @@
 
 | エンドポイント | リクエストタイプ | パラメーター | レスポンス |
 |--------------|--------------|-----------|---------|
-| `/sessions` | `GET` | `` | `{<br> "": "value1",<br> "key2": "value2"<br>}` |
-| `/sessions` | `POST` | `{<br> "session": { <br> "id": number \| undefined, <br> "message": string <br>}<br>}` | `{<br> "key1": "value1",<br> "key2": "value2"<br>}` |
+| `/sessions` | `GET` | `` | `{  "": "value1",   "key2": "value2"  }` |
+| `/sessions` | `POST` | `{   "session": {  "id": number \| undefined,   "message": string  }  }` | `{  "key1": "value1",  "key2": "value2"  }` |
 
 ---
 ### GetTheme
