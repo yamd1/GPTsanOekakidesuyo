@@ -12,8 +12,12 @@ import * as controllers from "./controllers/index";
     httpPort: process.env.PORT || 80,
     httpsPort: false, // CHANGE
     disableComponentsScan: true,
+    jsonMapper: {
+        additionalProperties: false,
+        disableUnscureConstructor: false
+    },
     mount: {
-        "/rest": [
+        "/": [
             ...Object.values(controllers)
         ]
     },

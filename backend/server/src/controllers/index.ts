@@ -3,3 +3,4 @@
  */
 
 export * from "./rest/HelloWorldController";
+export * from "./themes/GetThemesController";

@@ -23,6 +23,7 @@ services:
       - ./server:/opt
     tty: true
     stdin_open: true
+    command: npm start
     networks:
       - backend
 
