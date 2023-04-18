@@ -3,4 +3,5 @@
  */
 
 export * from "./healthCheck";
-export * from "./themes/GetThemesController";
+export * from "./session/SessionController";
+export * from "./themes/ThemesController";

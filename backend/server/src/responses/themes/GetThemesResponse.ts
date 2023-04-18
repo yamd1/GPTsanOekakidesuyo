@@ -1,13 +1,13 @@
 import {Theme} from "./Theme"
 
 export class GetThemesResponse {
-    private _themes: Array<Theme>
+    private themes: Array<Theme>
 
-    get themes(): Array<Theme> {
-        return this._themes
+    get _themes(): Array<Theme> {
+        return this.themes
     }
 
-    set themes(_themes: Array<Theme>) {
-        this._themes = _themes
+    set _themes(themes: Array<Theme>) {
+        this.themes = themes
     }
 }

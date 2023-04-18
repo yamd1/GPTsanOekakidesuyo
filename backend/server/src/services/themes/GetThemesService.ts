@@ -34,16 +34,16 @@ export class GetThemesService implements IGetThemesService {
 
         for (const theme of themes) {
             const response = new Theme()
-            response.id = theme.id
-            response.theme = theme.theme
-            response.created_at = theme.created_at
-            response.updated_at = theme.updated_at
+            response._id = theme.id
+            response._theme = theme.theme
+            response._created_at = theme.created_at
+            response._updated_at = theme.updated_at
 
             responses.push(response)
         }
 
         const getThemesResponse = new GetThemesResponse()
-        getThemesResponse.themes = responses
+        getThemesResponse._themes = responses
         return getThemesResponse
     }
 }

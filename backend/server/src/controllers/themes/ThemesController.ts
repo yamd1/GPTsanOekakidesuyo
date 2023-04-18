@@ -6,7 +6,7 @@ import {GetThemesResponse} from "../../responses/themes/GetThemesResponse";
 
 @Controller('/themes')
 @Service()
-export class GetThemesController {
+export class ThemesController {
 
     @Inject()
     private getThemesService: GetThemesService

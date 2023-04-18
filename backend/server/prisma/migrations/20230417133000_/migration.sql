@@ -21,7 +21,8 @@ CREATE TABLE `sessions` (
 -- CreateTable
 CREATE TABLE `messages` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `message` VARCHAR(191) NOT NULL,
+    `role` VARCHAR(191) NOT NULL,
+    `content` VARCHAR(191) NOT NULL,
     `sessions_id` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NULL,

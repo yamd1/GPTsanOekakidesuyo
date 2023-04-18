@@ -1,38 +1,38 @@
 export class Theme {
-    private _id: number
-    private _theme: string
-    private _created_at: Date
-    private _updated_at: Date | null
+    private id: number
+    private theme: string
+    private created_at: Date
+    private updated_at: Date | null
 
-    get id(): number {
-        return this._id
+    get _id(): number {
+        return this.id
     }
 
-    set id(_id: number) {
-        this._id = _id
+    set _id(id: number) {
+        this.id = id
     }
 
-    get theme(): string {
-        return this._theme
+    get _theme(): string {
+        return this.theme
     }
 
-    set theme(_theme: string) {
-        this._theme = _theme
+    set _theme(theme: string) {
+        this.theme = theme
     }
 
-    get created_at(): Date {
-        return this._created_at
+    get _created_at(): Date {
+        return this.created_at
     }
 
-    set created_at(_created_at: Date) {
-        this._created_at = _created_at
+    set _created_at(created_at: Date) {
+        this.created_at = created_at
     }
 
-    get updated_at(): Date | null {
-        return this._updated_at
+    get _updated_at(): Date | null {
+        return this.updated_at
     }
 
-    set updated_at(_updated_at: Date | null) {
-        this._updated_at = _updated_at
+    set _updated_at(updated_at: Date | null) {
+        this.updated_at = updated_at
     }
 }
