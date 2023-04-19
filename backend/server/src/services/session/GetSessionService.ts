@@ -2,7 +2,7 @@ import {PrismaClient, sessions} from "@prisma/client";
 import {Inject, Service} from "@tsed/di";
 import {GetSessionResponse} from "../../responses/session/GetSessionResponse";
 import {Message} from "../../responses/message/Message";
-import {Session} from "../../responses/session/Session";
+import {GetSession} from "../../responses/session/GetSession";
 import {IGetsessionService} from "./interface/IGetSessionService";
 import {SessionsRepository} from "../../repositories/sessions/SessionsRepository";
 import {messagesWithSession} from "../../repositories/messages/interface/IMessages";
@@ -50,9 +50,9 @@ export class GetSessionService implements IGetsessionService {
      * @param record DBから返却されたレコード
      * @return Session
      */
-    private async createSession(record: sessions & messagesWithSession): Promise<Session> {
+    private async createSession(record: sessions & messagesWithSession): Promise<GetSession> {
 
-        const session = new Session()
+        const session = new GetSession()
         session._id = record.id
         session._name = record.name
         session._messages = await this.createMessages(record)

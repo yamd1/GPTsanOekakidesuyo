@@ -1,13 +1,13 @@
-import {Session} from "./Session";
+import {GetSession} from "./GetSession";
 
 export class GetSessionResponse {
-    private session: Session | null
+    private session: GetSession | null
 
-    get _session(): Session | null {
+    get _session(): GetSession | null {
         return this.session
     }
 
-    set _session(session: Session | null) {
+    set _session(session: GetSession | null) {
         this.session = session
     }
 }

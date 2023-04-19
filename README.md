@@ -31,9 +31,13 @@
 | エンドポイント | リクエストタイプ | パラメーター | レスポンス |
 |--------------|--------------|-----------|---------|
 | `/session/:id` | `GET` | `PathParam=id` | { <br> "session": { <br> "id": number, <br> "name": string, <br> "messages": { <br> "id": number, <br> "message": string, <br> }[], <br> "created_at": Date, <br> "updated_at": Date \| null  <br> } <br> } |
-| `/session` | `POST` | { <br> "session": { <br> "id": number \| undefined, <br> "message": string <br> }  <br>} | { <br> "session": {<br> "id": number, <br> "name": string, <br> "response": string, <br>  } <br> } |
+| `/session` | `POST` | { <br> "id": number \| undefined, <br> "message": string <br>} | { <br> "session": {<br> "id": number, <br> "name": string, <br> "response": string, <br>  } <br> } |
 
 ---
 ### GetTheme
 
 ![GetTheme シーケンス図](./docs/GetTheme.svg)
+
+### PostSession
+
+![PostSEssion シーケンス図](./docs/PostSession.svg)

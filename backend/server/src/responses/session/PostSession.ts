@@ -1,10 +1,7 @@
-import {Message} from "../message/Message"
-
-export class Session {
-
+export class PostSession {
     private id: number
     private name: string
-    private messages: Array<Message>
+    private response: string
 
     get _id(): number {
         return this.id
@@ -22,11 +19,11 @@ export class Session {
         this.name = name
     }
 
-    get _messages(): Array<Message> {
-        return this.messages
+    get _response(): string {
+        return this.response
     }
 
-    set _messages(messages: Array<Message>) {
-        this.messages = messages
+    set _response(response: string) {
+        this.response = response
     }
 }

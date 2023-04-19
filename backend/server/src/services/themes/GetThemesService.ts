@@ -21,7 +21,10 @@ export class GetThemesService implements IGetThemesService {
     async run(): Promise<GetThemesResponse> {
         const prisma = new PrismaClient()
         return prisma.$transaction(async (prisma: any) => {
+
+            // TODO: ランダムなテーマを取得するように変更
             const themes = await this.themesRepository.findAll(prisma)
+
             return this.createResponse(themes)
         })
     }
