@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja" class="notranslate" translate="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPTさんお絵かきですよ</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+</head>
+<body>
+  <div id="app">
+    <h1 class="title">GPTさんお絵かきですよ</h1>
+    <p>{{ theme }}</p>
+    <div class="grid-container">
+      <div v-for="(row, rowIndex) in grid" :key="rowIndex" class="grid-row">
+        <div v-for="(cell, colIndex) in row" :key="colIndex" class="grid-cell" :class="{ 'cell-black': cell === 1 }" @click="toggleCell(rowIndex, colIndex)"></div>
+      </div>
+    </div>
+    <button @click="sendGrid">完成！</button>
+    <div class="message-container">
+      <p>{{ message }}</p>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+
