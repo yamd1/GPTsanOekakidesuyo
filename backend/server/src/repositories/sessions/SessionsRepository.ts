@@ -29,8 +29,8 @@ export class SessionsRepository {
     createWithMessages(prisma: PrismaClient, data: PostSessionRequest) {
         return prisma.sessions.createMany({
             data: {
-                name: data._name,
-                messages: 
+                name: data._name
+                // messages: 
             }
         })
     }
