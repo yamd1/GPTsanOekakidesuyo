@@ -1,4 +1,4 @@
 export interface IOpenAiMessage {
-    role: "system" | "user" | "assistant"
+    role: string
     content: string
 }

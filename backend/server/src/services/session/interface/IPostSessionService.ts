@@ -4,3 +4,8 @@ import {PostSessionResponse} from "../../../responses/session/PostSessionRespons
 export interface IPostSessionService {
     run(request: PostSessionRequest): Promise<PostSessionResponse>
 }
+
+export interface RoleContent {
+    role: string
+    content: string
+}

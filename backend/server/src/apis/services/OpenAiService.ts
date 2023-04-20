@@ -1,22 +1,34 @@
+import {Service} from "@tsed/di";
 import {BadRequest} from "@tsed/exceptions";
 import {Axios, AxiosResponse} from "axios";
+import {IOpenAiMessage} from "../interface/IOpenAiMessage";
 import {OpenAiRequest} from "../requests/OpenAiRequest";
 import {OpenAiResponse} from "../responses/OpenAiResponse";
 import {IOpenAiRawResponse} from "./interface/IOpenAiRawResponse";
 import {IOpenAiService} from "./interface/IOpenAiService";
 
+@Service()
 export class OpenAiService implements IOpenAiService {
 
+
+    /**
+     * 実行関数
+     */
     async run(request: OpenAiRequest): Promise<OpenAiResponse> {
+
         const response = await this.callChatGptApi(request)
             .catch((error: Error) => {
-                throw new Error(BadRequest.name)
+                throw new BadRequest(error.message)
             })
 
         return await this.createResponse(response.data)
     }
 
-    async callChatGptApi(request: OpenAiRequest): Promise<AxiosResponse<IOpenAiRawResponse, Error>> {
+
+    /**
+     * OpenAI API へHTTPリクエストを送信する
+     */
+    private async callChatGptApi(request: OpenAiRequest): Promise<AxiosResponse<IOpenAiRawResponse, Error>> {
         const axios = new Axios()
         const response = await axios.post(
             process.env['OPENAI_API_ENDPOINT']!,
@@ -27,7 +39,11 @@ export class OpenAiService implements IOpenAiService {
         return response
     }
 
-    async createPostData(request: OpenAiRequest) {
+
+    /**
+     * OpenAI API へ送信するリクエストデータを生成する
+     */
+    private async createPostData(request: OpenAiRequest) {
         return {
             "data": {
                 "model": request._model,
@@ -37,7 +53,11 @@ export class OpenAiService implements IOpenAiService {
         }
     }
 
-    async createHeaders() {
+
+    /**
+     * OpenAI API へ送信するリクエストヘッダを生成する
+     */
+    private async createHeaders() {
         return {
             "headers": {
                 "Content-Type": "application/json",
@@ -46,14 +66,19 @@ export class OpenAiService implements IOpenAiService {
         }
     }
 
-    async createResponse(response: IOpenAiRawResponse): Promise<OpenAiResponse> {
+
+    /**
+     * メインロジックへ返却するレスポンスデータを生成する
+     */
+    private async createResponse(response: IOpenAiRawResponse): Promise<OpenAiResponse> {
         const openAiResponse = new OpenAiResponse()
-        const messages = {
+        const messages = new Array<IOpenAiMessage>()
+        const message = {
             "role": response.choices[0].message.role,
             "content": response.choices[0].message.content
         }
+        messages.push(message)
         openAiResponse._messages = messages
-
 
         return openAiResponse
     }

@@ -6,6 +6,10 @@ export class PostSessionRequest {
     private id?: number
 
     @IsString()
+    @IsOptional()
+    private name?: string
+
+    @IsString()
     private message: string
 
     get _id(): number | undefined {
@@ -14,6 +18,14 @@ export class PostSessionRequest {
 
     set _id(id: number | undefined) {
         this.id = id
+    }
+
+    get _name(): string | undefined {
+        return this.name
+    }
+
+    set _name(name: string | undefined) {
+        this.name = name
     }
 
     get _message(): string {
