@@ -1,13 +1,13 @@
 import {IOpenAiMessage} from "../interface/IOpenAiMessage";
 
 export class OpenAiResponse {
-    private messages: Array<IOpenAiMessage>
+    private message: IOpenAiMessage
 
-    get _messages(): Array<IOpenAiMessage> {
-        return this._messages
+    get _message(): IOpenAiMessage {
+        return this.message
     }
 
-    set _messages(messages: Array<IOpenAiMessage>) {
-        this.messages = messages
+    set _message(message: IOpenAiMessage) {
+        this.message = message
     }
 }

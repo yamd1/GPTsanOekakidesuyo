@@ -72,14 +72,10 @@ export class OpenAiService implements IOpenAiService {
      */
     private async createResponse(response: IOpenAiRawResponse): Promise<OpenAiResponse> {
         const openAiResponse = new OpenAiResponse()
-        const messages = new Array<IOpenAiMessage>()
-        const message = {
+        openAiResponse._message = {
             "role": response.choices[0].message.role,
             "content": response.choices[0].message.content
         }
-        messages.push(message)
-        openAiResponse._messages = messages
-
         return openAiResponse
     }
 }
