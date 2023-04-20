@@ -1,5 +1,6 @@
-import {messages, PrismaClient, PrismaPromise, sessions} from "@prisma/client";
+import {PrismaClient, PrismaPromise, sessions} from "@prisma/client";
 import {Service} from "@tsed/di";
+import {PostSessionRequest} from "../../requests/session/PostSessionRequest";
 import {messagesWithSession} from "../messages/interface/IMessages";
 
 @Service()
@@ -21,6 +22,15 @@ export class SessionsRepository {
             },
             include: {
                 "messages": true
+            }
+        })
+    }
+
+    createWithMessages(prisma: PrismaClient, data: PostSessionRequest) {
+        return prisma.sessions.createMany({
+            data: {
+                name: data._name,
+                messages: 
             }
         })
     }
