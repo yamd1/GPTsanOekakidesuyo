@@ -54,17 +54,14 @@ export class PostSessionService implements IPostSessionService {
             }
 
             // 新規でゲームがスタートする場合
-            if (request._id === undefined) {
-                const userMessage = await this.createUserMessage(request)
-                const openAiRequest = await this.createRequestOpenAi(userMessage)
-                const openAiResponse = await this.openAiService.run(openAiRequest)
+            const userMessage = await this.createUserMessage(request)
+            const openAiRequest = await this.createRequestOpenAi(userMessage)
+            const openAiResponse = await this.openAiService.run(openAiRequest)
 
-                // sessions / messages テーブルへ保存
-                const session = await this.saveSessionsAndMessagesTable(prisma, request, openAiResponse._message)
-                return await this.createResponse(openAiResponse, session)
-            }
+            // sessions / messages テーブルへ保存
+            const session = await this.saveSessionsAndMessagesTable(prisma, request, openAiResponse._message)
+            return await this.createResponse(openAiResponse, session)
 
-            return new PostSessionResponse()
         })
     }
 
