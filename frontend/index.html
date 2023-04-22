@@ -9,17 +9,25 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-</head>
-<body>
   <div id="app">
     <h1 class="title">GPTさんお絵かきですよ</h1>
-    <p>{{ theme }}</p>
-    <div class="grid-container">
-      <div v-for="(row, rowIndex) in grid" :key="rowIndex" class="grid-row">
-        <div v-for="(cell, colIndex) in row" :key="colIndex" class="grid-cell" :class="{ 'cell-black': cell === 1 }" @click="toggleCell(rowIndex, colIndex)"></div>
-      </div>
+    <div class="message-container">
+        <p>{{ theme }}</p>
+        <select v-model="sessionId" @change="sessionName = $event.target.options[$event.target.selectedIndex].text">
+        <option v-for="session in sessions" :value="session.id">{{ session.name }}</option>
+      </select>
     </div>
-    <button @click="sendGrid">完成！</button>
+    <div class="grid-button-container">
+      <div class="grid-container">
+        <div v-for="(row, rowIndex) in grid" :key="rowIndex" class="grid-row">
+          <div v-for="(cell, colIndex) in row" :key="colIndex" class="grid-cell" :class="{ 'cell-black': cell === 1 }" @click="toggleCell(rowIndex, colIndex)"></div>
+        </div>
+      </div>
+      <button @click="sendGrid">完成！</button>
+    </div>
+    <div class="loading-overlay" v-if="loading">
+      <div class="loading-spinner"></div>
+    </div>
     <div class="message-container">
       <p>{{ message }}</p>
     </div>
