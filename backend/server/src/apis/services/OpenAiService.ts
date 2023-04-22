@@ -1,7 +1,6 @@
 import {Service} from "@tsed/di";
 import {BadRequest} from "@tsed/exceptions";
-import {Axios, AxiosResponse} from "axios";
-import {IOpenAiMessage} from "../interface/IOpenAiMessage";
+import axios, {AxiosResponse} from "axios";
 import {OpenAiRequest} from "../requests/OpenAiRequest";
 import {OpenAiResponse} from "../responses/OpenAiResponse";
 import {IOpenAiRawResponse} from "./interface/IOpenAiRawResponse";
@@ -9,7 +8,6 @@ import {IOpenAiService} from "./interface/IOpenAiService";
 
 @Service()
 export class OpenAiService implements IOpenAiService {
-
 
     /**
      * 実行関数
@@ -29,12 +27,12 @@ export class OpenAiService implements IOpenAiService {
      * OpenAI API へHTTPリクエストを送信する
      */
     private async callChatGptApi(request: OpenAiRequest): Promise<AxiosResponse<IOpenAiRawResponse, Error>> {
-        const axios = new Axios()
+
         const response = await axios.post(
             process.env['OPENAI_API_ENDPOINT']!,
             await this.createPostData(request),
             await this.createHeaders()
-        )
+        ).catch((err: Error) => {throw new BadRequest(err.message)})
 
         return response
     }
@@ -44,12 +42,11 @@ export class OpenAiService implements IOpenAiService {
      * OpenAI API へ送信するリクエストデータを生成する
      */
     private async createPostData(request: OpenAiRequest) {
+        console.log(request)
         return {
-            "data": {
-                "model": request._model,
-                "messages": request._messages,
-                "temperature": request._temperture
-            }
+            "model": request._model,
+            "messages": request._messages,
+            "temperature": request._temperature
         }
     }
 

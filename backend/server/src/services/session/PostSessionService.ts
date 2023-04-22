@@ -29,39 +29,41 @@ export class PostSessionService implements IPostSessionService {
      * 処理の流れはシーケンス図に記載
      * /docs/PostSession.svg
      */
-    run(request: PostSessionRequest): Promise<PostSessionResponse> {
+    async run(request: PostSessionRequest): Promise<PostSessionResponse> {
         const prisma = new PrismaClient()
-        return prisma.$transaction(async (prisma: any) => {
+
+        // ファントムリード・ノンリピータブルリードになる可能性があることから、トランザクション内で再度DB問い合わせを実施する
+        const session = await this.isExistsId(request) ?
+            await this.sessionsRepository.findById(prisma, request._id!) : undefined
+
+        if (session === null) {
+            throw new BadRequest(ErrorConst.NOT_FOUND_TARGET)
+        }
+
+        const userMessage = await this.createUserMessage(request)
+        const openAiRequest = await this.isExistsId(request) ?
+            await this.createRequestWithSessionOpenAi(session!, userMessage) : await this.createRequestOpenAi(userMessage)
+        const openAiResponse = await this.openAiService.run(openAiRequest)
+
+        // OpenAI APIとの通信でDBを専有したくないため、トランザクション内ではDB保存処理に限定する
+        return prisma.$transaction(async (prisma: PrismaClient) => {
 
             // 過去のゲームが存在する場合
             if (request._id !== undefined) {
+
+                // 再度DBに問い合わせ、ノンリピータブルリードが発生していないことを担保する
                 const session = await this.sessionsRepository.findById(prisma, request._id)
 
                 if (session === null) {
                     throw new BadRequest(ErrorConst.NOT_FOUND_TARGET)
                 }
 
-                // 新たに受信したリクエストメッセージ
-                const userMessage = await this.createUserMessage(request)
-
-                // 過去のやり取りをマージして、OpenAIへ送信するリクエストを構築・送信
-                const openAiRequest = await this.createRequestWithSessionOpenAi(session, userMessage)
-                const openAiResponse = await this.openAiService.run(openAiRequest)
-
-                // messagesテーブルへ保存
                 await this.saveMessagesTable(prisma, session.id, userMessage, openAiResponse._message)
                 return await this.createResponse(openAiResponse, session)
             }
 
-            // 新規でゲームがスタートする場合
-            const userMessage = await this.createUserMessage(request)
-            const openAiRequest = await this.createRequestOpenAi(userMessage)
-            const openAiResponse = await this.openAiService.run(openAiRequest)
-
-            // sessions / messages テーブルへ保存
             const session = await this.saveSessionsAndMessagesTable(prisma, request, openAiResponse._message)
             return await this.createResponse(openAiResponse, session)
-
         })
     }
 
@@ -70,8 +72,7 @@ export class PostSessionService implements IPostSessionService {
      * messagesテーブルへデータを登録する
      */
     async saveMessagesTable(prisma: PrismaClient, sessionId: number, userMessage: RoleContent, openAiResponse: IOpenAiMessage) {
-        this.messagesRepository.create(prisma, sessionId, userMessage)
-        this.messagesRepository.create(prisma, sessionId, openAiResponse)
+        return this.messagesRepository.createMany(prisma, sessionId, userMessage, openAiResponse)
     }
 
 
@@ -92,6 +93,14 @@ export class PostSessionService implements IPostSessionService {
 
 
     /**
+     * requestにIDが含まれるか
+     */
+    async isExistsId(request: PostSessionRequest): Promise<boolean> {
+        return request._id !== undefined
+    }
+
+
+    /**
      * 過去のゲーム履歴を元に、OpenAIに対してリクエストを整形する
      */
     async createRequestWithSessionOpenAi(session: sessions & messagesWithSession, newUserMessage: RoleContent): Promise<OpenAiRequest> {
@@ -105,7 +114,7 @@ export class PostSessionService implements IPostSessionService {
         const openAiRequest = new OpenAiRequest()
         openAiRequest._messages = messages
         openAiRequest._model = process.env['OPENAI_CHAT_MODEL']!
-        openAiRequest._temperture = Number(process.env['OPENAI_CHAT_TEMPERTURE']!)
+        openAiRequest._temperature = Number(process.env['OPENAI_CHAT_TEMPERTURE']!)
 
         return openAiRequest
     }
@@ -115,10 +124,14 @@ export class PostSessionService implements IPostSessionService {
      * 新規ゲーム時に、OpenAIに対してリクエストを整形する
      */
     async createRequestOpenAi(userMessage: RoleContent): Promise<OpenAiRequest> {
+        const messages = new Array<IOpenAiMessage>()
+        messages.push({role: 'system', content: process.env['OPENAI_CHAT_SYSTEM_MESSAGE']!})
+        messages.push(userMessage)
+
         const openAiRequest = new OpenAiRequest()
-        openAiRequest._messages = new Array(userMessage)
+        openAiRequest._messages = messages
         openAiRequest._model = process.env['OPENAI_CHAT_MODEL']!
-        openAiRequest._temperture = Number(process.env['OPENAI_CHAT_TEMPERTURE']!)
+        openAiRequest._temperature = Number(process.env['OPENAI_CHAT_TEMPERTURE']!)
         return openAiRequest
     }
 

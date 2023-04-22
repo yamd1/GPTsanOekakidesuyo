@@ -5,17 +5,20 @@ import {themes} from "./Themes"
 
 
 const prisma = new PrismaClient()
+
 const main = async () => {
 
+    await prisma.$queryRaw`SET foreign_key_checks = 0;`
+
     // Reset Databases
-    prisma.themes.deleteMany()
-    prisma.sessions.deleteMany()
-    prisma.messages.deleteMany()
+    await prisma.themes.deleteMany()
+    await prisma.sessions.deleteMany()
+    await prisma.messages.deleteMany()
 
     // Import seed data
-    themes()
-    sessions()
-    messages()
+    await themes()
+    await sessions()
+    await messages()
 }
 
 main()

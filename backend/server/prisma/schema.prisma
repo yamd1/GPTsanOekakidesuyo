@@ -30,7 +30,7 @@ model sessions {
 model messages {
   id          Int       @id @default(autoincrement())
   role        String
-  content     String
+  content     String    @db.Text
   sessions    sessions  @relation(fields: [sessions_id], references: [id])
   sessions_id Int
   created_at  DateTime  @default(now())
