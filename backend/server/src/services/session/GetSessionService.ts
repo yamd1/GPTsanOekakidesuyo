@@ -20,7 +20,7 @@ export class GetSessionService implements IGetsessionService {
      */
     run(id: number): Promise<GetSessionResponse> {
         const prisma = new PrismaClient()
-        return prisma.$transaction(async (prisma: any) => {
+        return prisma.$transaction(async (prisma: PrismaClient) => {
             const session = await this.sessionsRepository.findById(prisma, id)
 
             return await this.createResponse(session)

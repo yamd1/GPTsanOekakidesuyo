@@ -6,20 +6,20 @@ import {RoleContent} from "../../services/session/interface/IPostSessionService"
 @Service()
 export class MessagesRepository {
 
-    create(prisma: PrismaClient, sessionId: number, roleContent: RoleContent | IOpenAiMessage) {
-        return prisma.messages.create({
-            data: {
-                role: roleContent.role,
-                content: roleContent.content,
-                sessions: {
-                    connect: {
-                        id: sessionId
-                    }
+    createMany(prisma: PrismaClient, sessionId: number, userMessage: RoleContent, openAiResponse: IOpenAiMessage) {
+        return prisma.messages.createMany({
+            data: [
+                {
+                    role: userMessage.role,
+                    content: userMessage.content,
+                    sessions_id: sessionId
                 },
-            },
-            include: {
-                sessions: true
-            }
+                {
+                    role: openAiResponse.role,
+                    content: openAiResponse.content,
+                    sessions_id: sessionId
+                }
+            ]
         })
     }
 }

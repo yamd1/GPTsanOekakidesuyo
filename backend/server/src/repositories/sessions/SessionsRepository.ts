@@ -8,6 +8,13 @@ import {messagesWithSession} from "../messages/interface/IMessages";
 export class SessionsRepository {
 
     /**
+     *
+     */
+    findAll(prisma: PrismaClient): PrismaPromise<Array<sessions>> {
+        return prisma.sessions.findMany()
+    }
+
+    /**
      * id に合致するSessionレコードと紐づくmessageレコードを取得する
      *
      * @param prisma PrismaClient

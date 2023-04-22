@@ -45,9 +45,8 @@ export class PostSessionService implements IPostSessionService {
             await this.createRequestWithSessionOpenAi(session!, userMessage) : await this.createRequestOpenAi(userMessage)
         const openAiResponse = await this.openAiService.run(openAiRequest)
 
-
-        // OpenAI APIとの連携でDBを専有したくないため、トランザクション内ではDB保存処理に限定する
-        return prisma.$transaction(async (prisma: any) => {
+        // OpenAI APIとの通信でDBを専有したくないため、トランザクション内ではDB保存処理に限定する
+        return prisma.$transaction(async (prisma: PrismaClient) => {
 
             // 過去のゲームが存在する場合
             if (request._id !== undefined) {
@@ -73,8 +72,7 @@ export class PostSessionService implements IPostSessionService {
      * messagesテーブルへデータを登録する
      */
     async saveMessagesTable(prisma: PrismaClient, sessionId: number, userMessage: RoleContent, openAiResponse: IOpenAiMessage) {
-        this.messagesRepository.create(prisma, sessionId, userMessage)
-        this.messagesRepository.create(prisma, sessionId, openAiResponse)
+        return this.messagesRepository.createMany(prisma, sessionId, userMessage, openAiResponse)
     }
 
 
@@ -126,8 +124,12 @@ export class PostSessionService implements IPostSessionService {
      * 新規ゲーム時に、OpenAIに対してリクエストを整形する
      */
     async createRequestOpenAi(userMessage: RoleContent): Promise<OpenAiRequest> {
+        const messages = new Array<IOpenAiMessage>()
+        messages.push({role: 'system', content: process.env['OPENAI_CHAT_SYSTEM_MESSAGE']!})
+        messages.push(userMessage)
+
         const openAiRequest = new OpenAiRequest()
-        openAiRequest._messages = new Array(userMessage)
+        openAiRequest._messages = messages
         openAiRequest._model = process.env['OPENAI_CHAT_MODEL']!
         openAiRequest._temperature = Number(process.env['OPENAI_CHAT_TEMPERTURE']!)
         return openAiRequest
