@@ -11,11 +11,15 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 ---
 ## Database Design
 
+### ER図
+
+![データベース ER図](./docs/database/ER.png)
+
 
 ---
 ## Backend Design
 
-## API概要
+### API概要
 
 | API名 | 概要 | ドキュメントリンク |
 |-------|------|------------------|
@@ -23,15 +27,15 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 | Sessions | 過去のゲーム一覧に関するAPI | [API2ドキュメント](リンク) |
 | Session | 一回のゲームに関するAPI | [API2ドキュメント](リンク) |
 
-## エンドポイント一覧
+### エンドポイント一覧
 
-### Sessions
+#### Sessions
 
 | エンドポイント | リクエストタイプ | パラメーター | レスポンス |
 |--------------|--------------|-----------|---------|
 | `/sessions` | `GET` | `-` | { <br> "sessions": { <br> "id": number, <br> "name": string, <br> "created_at": Date, <br> "updated_at": Date \| null  <br> } [] <br> } |
 
-### Session
+#### Session
 
 | エンドポイント | リクエストタイプ | パラメーター | レスポンス |
 |--------------|--------------|-----------|---------|
@@ -39,21 +43,21 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 | `/session` | `POST` | { <br> "id": number \| undefined, <br> "message": string <br>} | { <br> "session": {<br> "id": number, <br> "name": string, <br> "response": string, <br>  } <br> } |
 
 
-### Themes
+#### Themes
 
 | エンドポイント | リクエストタイプ | パラメーター | レスポンス |
 |--------------|--------------|-----------|---------|
 | `/themes` | `GET` | `-` | {<br> "getThemes" : [ <br> "id": number,<br> "theme": string, <br> "created_at": Date, <br> "updated_at": Date, <br>  ]<br>} |
 
 ---
-### GetSessions 
+#### GetSessions 
 
-### GetSession
+#### GetSession
 
-### PostSession
+#### PostSession
 
-![PostSEssion シーケンス図](./docs/PostSession.svg)
+![PostSEssion シーケンス図](./docs/backend/PostSession.svg)
 
-### GetTheme
+#### GetTheme
 
-![GetTheme シーケンス図](./docs/GetTheme.svg)
+![GetTheme シーケンス図](./docs/backend/GetTheme.svg)
