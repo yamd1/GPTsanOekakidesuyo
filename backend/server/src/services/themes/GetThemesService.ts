@@ -30,7 +30,9 @@ export class GetThemesService implements IGetThemesService {
     }
 
     /**
-     * 
+     * GetThemesResponseを生成する
+     * @param {Array<themes>} themes
+     * @returns {Promise<GetThemesResponse>}
      */
     async createResponse(themes: Array<themes>): Promise<GetThemesResponse> {
         const responses = new Array<Theme>()

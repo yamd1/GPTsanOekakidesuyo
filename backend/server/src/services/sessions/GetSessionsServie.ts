@@ -11,6 +11,10 @@ export class GetSessionsService implements IGetSessionsService {
     @Inject()
     private sessionsRepository: SessionsRepository
 
+    /**
+     * セッション一覧を取得する 
+     * @returns {Promise<GetSessionsResponse>}
+     */
     run(): Promise<GetSessionsResponse> {
 
         const prisma = new PrismaClient()
@@ -23,6 +27,11 @@ export class GetSessionsService implements IGetSessionsService {
 
 
 
+    /**
+     * レスポンスを生成する
+     * @param {Array<sessions>} sessions
+     * @returns {Promise<GetSessionsResponse>}
+     */
     async createResponse(sessions: Array<sessions>): Promise<GetSessionsResponse> {
         const getSessionsResponse = new GetSessionsResponse()
         getSessionsResponse._sessions = await this.createGetSessions(sessions)
@@ -30,6 +39,12 @@ export class GetSessionsService implements IGetSessionsService {
         return getSessionsResponse
     }
 
+
+    /**
+     * GetSessionsを生成する
+     * @param {Array<sessions>} sessions
+     * @returns {Promise<Array<GetSessions>>}
+     */
     async createGetSessions(sessions: Array<sessions>): Promise<Array<GetSessions>> {
         const getSessionsArray = new Array<GetSessions>()
 
