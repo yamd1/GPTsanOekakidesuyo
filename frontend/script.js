@@ -1,4 +1,5 @@
 
+// TODO: 環境変数用ファイルからインポートするように修正
 const ENDPOINT = "http://localhost:8000/"
 const THEMES = "themes"
 const SESSION = "session"
