@@ -42,7 +42,6 @@ export class OpenAiService implements IOpenAiService {
      * OpenAI API へ送信するリクエストデータを生成する
      */
     private async createPostData(request: OpenAiRequest) {
-        console.log(request)
         return {
             "model": request._model,
             "messages": request._messages,
