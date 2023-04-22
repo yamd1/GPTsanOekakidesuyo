@@ -1,6 +1,7 @@
 import {IOpenAiMessage} from "../interface/IOpenAiMessage"
 
 export class OpenAiRequest {
+
     private model: string
     private messages: Array<IOpenAiMessage>
     private temperature: number
@@ -21,11 +22,11 @@ export class OpenAiRequest {
         this.messages = messages
     }
 
-    get _temperture(): number {
+    get _temperature(): number {
         return this.temperature
     }
 
-    set _temperture(temperature: number) {
+    set _temperature(temperature: number) {
         this.temperature = temperature
     }
 }

@@ -1,6 +1,6 @@
 import {Service} from "@tsed/di";
 import {BadRequest} from "@tsed/exceptions";
-import {Axios, AxiosResponse} from "axios";
+import axios, {AxiosResponse} from "axios";
 import {IOpenAiMessage} from "../interface/IOpenAiMessage";
 import {OpenAiRequest} from "../requests/OpenAiRequest";
 import {OpenAiResponse} from "../responses/OpenAiResponse";
@@ -16,11 +16,14 @@ export class OpenAiService implements IOpenAiService {
      */
     async run(request: OpenAiRequest): Promise<OpenAiResponse> {
 
+        console.log(" aaaaaaaaa ")
         const response = await this.callChatGptApi(request)
             .catch((error: Error) => {
                 throw new BadRequest(error.message)
             })
 
+        console.log("           -----------------                 ")
+        console.log(response)
         return await this.createResponse(response.data)
     }
 
@@ -29,12 +32,17 @@ export class OpenAiService implements IOpenAiService {
      * OpenAI API へHTTPリクエストを送信する
      */
     private async callChatGptApi(request: OpenAiRequest): Promise<AxiosResponse<IOpenAiRawResponse, Error>> {
-        const axios = new Axios()
+
+        console.log("request")
+        console.log(process.env['OPENAI_API_ENDPOINT']!)
+        console.log(await this.createPostData(request))
+        console.log(await this.createHeaders())
+
         const response = await axios.post(
             process.env['OPENAI_API_ENDPOINT']!,
             await this.createPostData(request),
             await this.createHeaders()
-        )
+        ).catch((err: Error) => {throw new BadRequest(err.message)})
 
         return response
     }
@@ -45,11 +53,9 @@ export class OpenAiService implements IOpenAiService {
      */
     private async createPostData(request: OpenAiRequest) {
         return {
-            "data": {
-                "model": request._model,
-                "messages": request._messages,
-                "temperature": request._temperture
-            }
+            "model": request._model,
+            "messages": request._messages,
+            "temperature": request._temperature
         }
     }
 

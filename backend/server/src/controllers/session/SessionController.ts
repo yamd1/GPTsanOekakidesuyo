@@ -22,8 +22,7 @@ export class SessionController {
     }
 
     @Post('/')
-    postSession(@BodyParams('postSessionRequest', PostSessionRequest) postSessionRequest: PostSessionRequest): Promise<PostSessionResponse> {
-        console.log(postSessionRequest)
+    postSession(@BodyParams(PostSessionRequest) postSessionRequest: PostSessionRequest): Promise<PostSessionResponse> {
         return this.postSessionService.run(postSessionRequest)
     }
 }

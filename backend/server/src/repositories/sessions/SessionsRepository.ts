@@ -1,7 +1,6 @@
 import {PrismaClient, PrismaPromise, sessions} from "@prisma/client";
 import {Service} from "@tsed/di";
 import {IOpenAiMessage} from "../../apis/interface/IOpenAiMessage";
-import {OpenAiResponse} from "../../apis/responses/OpenAiResponse";
 import {PostSessionRequest} from "../../requests/session/PostSessionRequest";
 import {messagesWithSession} from "../messages/interface/IMessages";
 
@@ -28,6 +27,9 @@ export class SessionsRepository {
         })
     }
 
+    /**
+     *
+     */
     createWithMessages(prisma: PrismaClient, data: PostSessionRequest, openAiResponse: IOpenAiMessage) {
         return prisma.sessions.create({
             data: {
@@ -38,7 +40,6 @@ export class SessionsRepository {
                         {role: openAiResponse.role, content: openAiResponse.content}
                     ]
                 }
-
             },
             include: {
                 messages: true
