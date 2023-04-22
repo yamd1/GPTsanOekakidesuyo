@@ -1,7 +1,6 @@
 import {Service} from "@tsed/di";
 import {BadRequest} from "@tsed/exceptions";
 import axios, {AxiosResponse} from "axios";
-import {IOpenAiMessage} from "../interface/IOpenAiMessage";
 import {OpenAiRequest} from "../requests/OpenAiRequest";
 import {OpenAiResponse} from "../responses/OpenAiResponse";
 import {IOpenAiRawResponse} from "./interface/IOpenAiRawResponse";
@@ -10,20 +9,16 @@ import {IOpenAiService} from "./interface/IOpenAiService";
 @Service()
 export class OpenAiService implements IOpenAiService {
 
-
     /**
      * 実行関数
      */
     async run(request: OpenAiRequest): Promise<OpenAiResponse> {
 
-        console.log(" aaaaaaaaa ")
         const response = await this.callChatGptApi(request)
             .catch((error: Error) => {
                 throw new BadRequest(error.message)
             })
 
-        console.log("           -----------------                 ")
-        console.log(response)
         return await this.createResponse(response.data)
     }
 
@@ -32,11 +27,6 @@ export class OpenAiService implements IOpenAiService {
      * OpenAI API へHTTPリクエストを送信する
      */
     private async callChatGptApi(request: OpenAiRequest): Promise<AxiosResponse<IOpenAiRawResponse, Error>> {
-
-        console.log("request")
-        console.log(process.env['OPENAI_API_ENDPOINT']!)
-        console.log(await this.createPostData(request))
-        console.log(await this.createHeaders())
 
         const response = await axios.post(
             process.env['OPENAI_API_ENDPOINT']!,
