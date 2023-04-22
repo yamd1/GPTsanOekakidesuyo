@@ -1,0 +1,41 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.grid-container {
+  display: inline-block;
+}
+
+.grid-row {
+  display: flex;
+}
+
+.grid-cell {
+  width: 10px;
+  height: 10px;
+  border: 1px solid #ccc;
+}
+
+.cell-black {
+  background-color: black;
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+}
+
+.message-container {
+  margin-top: 20px;
+  padding-bottom: 20px;
+}

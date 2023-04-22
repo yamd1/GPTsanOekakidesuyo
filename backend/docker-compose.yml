@@ -9,6 +9,7 @@ volumes:
 
 services:
   server:
+    container_name: server
     build:
       context: ./server
       args:
@@ -22,10 +23,12 @@ services:
       - ./server:/opt
     tty: true
     stdin_open: true
+    command: npm start
     networks:
       - backend
 
   database:
+    container_name: database
     build: 
       context: ./database
     environment:

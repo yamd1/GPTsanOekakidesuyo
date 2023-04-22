@@ -2,10 +2,37 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
+  binaryTargets   = ["native", "linux-musl", "rhel-openssl-1.0.x"]
 }
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model themes {
+  id         Int       @id @default(autoincrement())
+  theme      String
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+}
+
+model sessions {
+  id         Int        @id @default(autoincrement())
+  name       String
+  created_at DateTime   @default(now())
+  updated_at DateTime?
+  messages   messages[]
+}
+
+model messages {
+  id          Int       @id @default(autoincrement())
+  role        String
+  content     String
+  sessions    sessions  @relation(fields: [sessions_id], references: [id])
+  sessions_id Int
+  created_at  DateTime  @default(now())
+  updated_at  DateTime?
 }

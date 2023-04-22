@@ -32,10 +32,9 @@ RUN npm install -g pm2
 
 COPY --from=build /opt .
 
-RUN npm ci
-RUN npm run build
-
 COPY processes.config.js .
+
+RUN chown -R 1000:1000 "/root/.npm"
 
 EXPOSE 80
 ENV PORT 80
