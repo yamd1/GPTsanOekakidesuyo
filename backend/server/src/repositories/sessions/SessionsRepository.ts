@@ -43,6 +43,7 @@ export class SessionsRepository {
                 name: data._name!,
                 messages: {
                     create: [
+                        {role: "system", content: process.env['OPENAI_CHAT_SYSTEM_MESSAGE']!},
                         {role: "user", content: data._message},
                         {role: openAiResponse.role, content: openAiResponse.content}
                     ]
