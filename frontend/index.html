@@ -20,7 +20,15 @@
     <div class="grid-button-container">
       <div class="grid-container">
         <div v-for="(row, rowIndex) in grid" :key="rowIndex" class="grid-row">
-          <div v-for="(cell, colIndex) in row" :key="colIndex" class="grid-cell" :class="{ 'cell-black': cell === 1 }" @click="toggleCell(rowIndex, colIndex)"></div>
+        <div v-for="(cell, colIndex) in row" :key="colIndex" class="grid-cell"
+             :class="{ 'cell-black': cell === 1 }"
+             @pointerdown="startDrawing(rowIndex, colIndex)"
+             @pointerover="draw(rowIndex, colIndex)"
+             @pointerup="stopDrawing"
+             >
+        </div>
+
+
         </div>
       </div>
       <button @click="sendGrid">完成！</button>

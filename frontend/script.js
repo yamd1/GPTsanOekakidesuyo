@@ -15,6 +15,7 @@ const app = Vue.createApp({
             sessionId: "",
             sessionName: "",
             sessions: [],
+            isDrawing: false,
         };
     },
 
@@ -40,10 +41,8 @@ const app = Vue.createApp({
     },
 
     methods: {
-        toggleCell(rowIndex, colIndex) {
-            this.grid[rowIndex][colIndex] = this.grid[rowIndex][colIndex] === 0 ? 1 : 0;
-        },
 
+        // グリッド配列に保存されたデータを送信する
         sendGrid() {
             this.loading = true;
             this.message = "";
@@ -60,9 +59,33 @@ const app = Vue.createApp({
                 });
         },
 
+        // グリッド配列を文字列に変換する
         gridDataToString() {
             return this.grid.map((row) => row.join("")).join("\n");
         },
+
+        // グリッド配列の特定の位置の0/1を反転する
+        toggleCell(rowIndex, colIndex) {
+            this.grid[rowIndex][colIndex] = this.grid[rowIndex][colIndex] === 0 ? 1 : 0;
+        },
+
+        // 描画を開始する
+        startDrawing(rowIndex, colIndex) {
+            this.isDrawing = true;
+            this.toggleCell(rowIndex, colIndex);
+        },
+
+        draw(rowIndex, colIndex) {
+            console.log(this.isDrawing)
+            if (this.isDrawing) {
+                this.toggleCell(rowIndex, colIndex);
+            }
+        },
+
+        stopDrawing() {
+            this.isDrawing = false;
+        },
+
     },
 });
 

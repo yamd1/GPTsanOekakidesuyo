@@ -8,7 +8,12 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 - 機密情報などの送信を防ぐためのマスク処理機能を持たせることが可能。
 
 ---
-## 使い方
+## GPTさんお絵かきですよ
+
+![demo.git](./docs/demo.gif)
+
+---
+## Setup
 
 ### Frontend
 - `npm i -g http-server` を実行してhttp-serverをインストール。
@@ -36,8 +41,8 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 
 ### API概要
 
-| API名 | 概要 | 
-|-------|------|------------------|
+| API名 | 概要 |
+|-------|------|
 | Themes | 出題されるお題に関するAPI |
 | Sessions | 過去のゲーム一覧に関するAPI |
 | Session | 一回のゲームに関するAPI |
