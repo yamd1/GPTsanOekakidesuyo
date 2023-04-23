@@ -1,12 +1,27 @@
 # GPTsanOekakidesuyo
 
 ## 概要
-OpenAI APIをターゲットに、リクエストを送信するためのProxyサーバーとして機能するサービスである。
-本プロジェクトを用いることで、得られるベネフィット
+OpenAI APIをターゲットに、リクエストを送信するためのProxyサーバーとして機能するサービスである。  
+本プロジェクトを用いることで、得られるベネフィット  
 - ユーザーインターフェイスが自由に選択可能。（例えば、本プロジェクトフロントエンドのお絵かき画面、Slack、Line）
 - ユーザーのやり取りを保持・分析が可能。
 - 機密情報などの送信を防ぐためのマスク処理機能を持たせることが可能。
 
+---
+## 使い方
+
+### Frontend
+- `npm i -g http-server` を実行してhttp-serverをインストール。
+- `/frontend` ディレクトリ内で `http-server` を実行。
+
+### Backend
+- `Docker Desktop` をインストール。
+- `/backend` ディレクトリ内で `docker compose up -d` を実行。
+- (初回のみ)`/backend/server/.env.example`から.envをコピー。
+- (初回のみ)`/backend/server/.env`内部に適切なクレデンシャル情報を入力する。
+- (初回のみ)`docker exec server sh` でコンテナ内に入る。
+- (初回のみ)データベースセットアップのため、`npx prisma migrate` `npx prisma generate dev` `npm run seed` を実行。
+- OpenAI Chat のシステム設定を変更したい場合は、`/backend/server/.env` ファイルの `OPENAI_CHAT_SYSTEM_MESSAGE` を変更する。
 
 ---
 ## Database Design
@@ -21,11 +36,11 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 
 ### API概要
 
-| API名 | 概要 | ドキュメントリンク |
+| API名 | 概要 | 
 |-------|------|------------------|
-| Themes | 出題されるお題に関するAPI | [API1ドキュメント](リンク) |
-| Sessions | 過去のゲーム一覧に関するAPI | [API2ドキュメント](リンク) |
-| Session | 一回のゲームに関するAPI | [API2ドキュメント](リンク) |
+| Themes | 出題されるお題に関するAPI |
+| Sessions | 過去のゲーム一覧に関するAPI |
+| Session | 一回のゲームに関するAPI |
 
 ### エンドポイント一覧
 
@@ -52,12 +67,19 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 ---
 #### GetSessions 
 
+![GetSessions シーケンス図](./docs/backend/Common_GetRecord.svg.svg)
+
+---
 #### GetSession
 
+![GetSession シーケンス図](./docs/backend/Common_GetRecord.svg.svg)
+
+---
 #### PostSession
 
-![PostSEssion シーケンス図](./docs/backend/PostSession.svg)
+![PostSession シーケンス図](./docs/backend/PostSession.svg)
 
+---
 #### GetTheme
 
-![GetTheme シーケンス図](./docs/backend/GetTheme.svg)
+![GetTheme シーケンス図](./docs/backend/Common_GetRecord.svg.svg)

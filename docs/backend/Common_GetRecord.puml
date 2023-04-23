@@ -6,7 +6,6 @@ database "DB" as database
 user -> backend: リクエストを送信
 backend -> database: データを取得
 database --> backend: データを返却
-backend -> backend: ランダムに1件に絞り込む
 backend --> user: 結果を返却
 @enduml
 
