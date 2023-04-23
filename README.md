@@ -1,19 +1,20 @@
-# GPTsanOekakidesuyo
+# GPTさんお絵かきですよ
 
-## 概要
+OpenAI Chat(gpt3.5)に対して「`0と1で構成された32*32の文字列` `0は白、1は黒`」というルールでプロンプトを発行し、描かれた絵を言い当てることができるかを試すゲーム
+
+![demo.git](./docs/demo.gif)
+
+
+---
+## 期待できる活用方法
 OpenAI APIをターゲットに、リクエストを送信するためのProxyサーバーとして機能するサービスである。  
-本プロジェクトを用いることで、得られるベネフィット  
+本プロジェクトをベースとして用いることで、以下の機能を実現することが可能になる。
 - ユーザーインターフェイスが自由に選択可能。（例えば、本プロジェクトフロントエンドのお絵かき画面、Slack、Line）
 - ユーザーのやり取りを保持・分析が可能。
 - 機密情報などの送信を防ぐためのマスク処理機能を持たせることが可能。
 
 ---
-## GPTさんお絵かきですよ
-
-![demo.git](./docs/demo.gif)
-
----
-## Setup
+## 設定方法
 
 ### Frontend
 - `npm i -g http-server` を実行してhttp-serverをインストール。
@@ -24,7 +25,7 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 - `/backend` ディレクトリ内で `docker compose up -d` を実行。
 - (初回のみ)`/backend/server/.env.example`から.envをコピー。
 - (初回のみ)`/backend/server/.env`内部に適切なクレデンシャル情報を入力する。
-- (初回のみ)`docker exec server sh` でコンテナ内に入る。
+- (初回のみ)`docker exec -it server sh` でコンテナ内に入る。
 - (初回のみ)データベースセットアップのため、`npx prisma migrate` `npx prisma generate dev` `npm run seed` を実行。
 - OpenAI Chat のシステム設定を変更したい場合は、`/backend/server/.env` ファイルの `OPENAI_CHAT_SYSTEM_MESSAGE` を変更する。
 
@@ -72,12 +73,12 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 ---
 #### GetSessions 
 
-![GetSessions シーケンス図](./docs/backend/Common_GetRecord.svg.svg)
+![GetSessions シーケンス図](./docs/backend/Common_GetRecord.svg)
 
 ---
 #### GetSession
 
-![GetSession シーケンス図](./docs/backend/Common_GetRecord.svg.svg)
+![GetSession シーケンス図](./docs/backend/Common_GetRecord.svg)
 
 ---
 #### PostSession
@@ -87,4 +88,5 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 ---
 #### GetTheme
 
-![GetTheme シーケンス図](./docs/backend/Common_GetRecord.svg.svg)
+![GetTheme シーケンス図](./docs/backend/Common_GetRecord.svg)
+
