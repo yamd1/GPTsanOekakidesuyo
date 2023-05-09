@@ -44,11 +44,23 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 
 | API名 | 概要 |
 |-------|------|
+| HealthCheck | API状態確認用エンドポイント(兼マルチプロセス検証用) |
 | Themes | 出題されるお題に関するAPI |
 | Sessions | 過去のゲーム一覧に関するAPI |
 | Session | 一回のゲームに関するAPI |
 
 ### エンドポイント一覧
+
+#### HealthCheck
+| エンドポイント | リクエストタイプ | パラメーター | レスポンス |
+|--------------|--------------|-----------|---------|
+| `/` | `GET` | `-` | "OK" |
+| `/fibonacci/:n` | `GET` | `-` | "{ <br> "result": number <br> }" |
+
+
+| エンドポイント | リクエストタイプ | パラメーター | レスポンス |
+|--------------|--------------|-----------|---------|
+| `/sessions` | `GET` | `-` | { <br> "sessions": { <br> "id": number, <br> "name": string, <br> "created_at": Date, <br> "updated_at": Date \| null  <br> } [] <br> } |
 
 #### Sessions
 
