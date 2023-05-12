@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { toRefs } from "vue"
 
 // pages/Oekaki.vueから受け取る状態管理変
@@ -9,27 +10,32 @@ interface Props {
 }
 
 // 状態管理変数のデフォルト値を設定
-/* const props = widthDefaults<Props>(defineProps<Props>(), { */
-/*     theme: "a", */
-/*     session: "b", */
-/*     sessionList: ["c"] */
-/* }) */
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+    theme: "",
+    session: "",
+    sessionList: () => []
+})
 
 const { theme, session, sessionList } = toRefs(props)
 
 // 変更時にpages/Oekaki.vueに通知するためのイベント
 const emit = defineEmits(["update:theme", "update:session", "update:sessionList"])
 
+const themeComputed = computed({
+    get: () => theme.value,
+    set: (value: string) => {
+        emit("update:theme", value)
+    }
+})
+
+
 </script>
 
 <template>
-<H2>OekakiTop</H2>
-{{theme.value}}
-{{session}}
-{{sessionList.value}}
-
-
+    <H2>OekakiTop</H2>
+    {{ JSON.stringify(theme) }}
+    {{ session }}
+    {{ sessionList }}
 </template>
 
 

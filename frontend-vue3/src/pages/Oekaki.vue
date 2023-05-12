@@ -23,7 +23,7 @@ const sessionComputed = computed({
 })
 
 // 過去のセッション一覧を保持する状態管理変数
-const sessionList = ref([])
+const sessionList = ref(new Array<string>())
 const sessionListComputed = computed({
     get: () => sessionList.value,
     set: (value: Array<string>) => {
@@ -52,9 +52,9 @@ const openAiResultComputed = computed({
 </script>
 
 <template>
-<H1>Hello Pages</H1>
-<OekakiTop :theme="themeComputed" :session="sessionComputed" :sessionList="sessionListComputed"/>
-<OekakiMiddle :binaries="binariesComputed"/>
-<OekakiBottom :binaries="binariesComputed" :openAiResult="openAiResultComputed"/>
+    <H1>GPTさんお絵かきですよ</H1>
+    <OekakiTop v-model:theme="themeComputed" v-model:session="sessionComputed" v-model:sessionList="sessionListComputed" />
+    <OekakiMiddle v-model:binaries="binariesComputed" />
+    <OekakiBottom v-model:binaries="binariesComputed" v-model:openAiResult="openAiResultComputed" />
 </template>
 
