@@ -1,20 +1,22 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { toRefs } from "vue"
-import  useGetThemesApi  from "../composables/useGetThemesApi.ts"
+import { toRefs, onMounted, computed } from "vue"
+import useGetThemesApi from "../composables/useGetThemesApi"
+import useGetSessionsApi from "../composables/useGetSessionsApi"
+import Select from "../molecules/Select.vue";
+import { IGetSessionsResponse } from "../composables/interface/IGetSessionsResponse";
 
 // pages/Oekaki.vueから受け取る状態管理変
 interface Props {
     theme: string
     session: string
-    sessionList: Array<string>
+    sessionList: IGetSessionsResponse
 }
 
 // 状態管理変数のデフォルト値を設定
 const props = withDefaults(defineProps<Props>(), {
     theme: "",
     session: "",
-    sessionList: () => []
+    sessionList: () => <IGetSessionsResponse>{}
 })
 
 const { theme, session, sessionList } = toRefs(props)
@@ -29,20 +31,38 @@ const themeComputed = computed({
     }
 })
 
-const { randomTheme } = useGetThemesApi()
+const sessionComputed = computed({
+    get: () => session.value,
+    set: (value: string) => {
+        emit("update:session", value)
+    }
+})
 
-const click = async () => {
+const sessionListComputed = computed({
+    get: () => sessionList.value,
+    set: (value: <IGetSessionsResponse>{}) => {
+        emit("update:sessionList", value)
+    }
+})
+
+const { randomTheme } = useGetThemesApi()
+const { getSessionList } = useGetSessionsApi()
+
+onMounted(async () => {
     themeComputed.value = await randomTheme()
-}
+    sessionListComputed.value = await getSessionList()
+})
 
 </script>
 
 <template>
     <H2>OekakiTop</H2>
-    <button @click="click">buttun</button>
-    {{ theme }}
-    {{ session }}
-    {{ sessionList }}
+    <div>
+        {{ theme }}
+    </div>
+    <div>
+        <Select v-model:session="sessionComputed" v-model:sessionList="sessionListComputed"></Select>
+    </div>
 </template>
 
 
