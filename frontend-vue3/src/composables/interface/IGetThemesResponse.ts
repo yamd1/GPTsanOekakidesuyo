@@ -1,5 +1,5 @@
 export interface IGetThemesResponse {
-    getThemes: IGetThemes[]
+    themes: IGetThemes[]
 }
 
 interface IGetThemes {
