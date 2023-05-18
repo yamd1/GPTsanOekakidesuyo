@@ -40,7 +40,7 @@ const sessionComputed = computed({
 
 const sessionListComputed = computed({
     get: () => sessionList.value,
-    set: (value: <IGetSessionsResponse>{}) => {
+    set: (value: any) => {
         emit("update:sessionList", value)
     }
 })
@@ -56,9 +56,8 @@ onMounted(async () => {
 </script>
 
 <template>
-    <H2>OekakiTop</H2>
     <div>
-        {{ theme }}
+        お題：{{ theme }}
     </div>
     <div>
         <Select v-model:session="sessionComputed" v-model:sessionList="sessionListComputed"></Select>

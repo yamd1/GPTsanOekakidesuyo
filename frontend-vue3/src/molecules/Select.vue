@@ -26,8 +26,7 @@ const sessionComputed = computed({
 </script>
 
 <template>
-  {{ sessionList }}
-  <select v-for="session in sessionList.sessions">
-    <option value="session.name">{{ session }}</option>
+  <select v-model="sessionComputed">
+    <option v-for="session in sessionList.sessions" :value="session.id">{{ session.name }}</option>
   </select>
 </template>
