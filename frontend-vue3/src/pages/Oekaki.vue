@@ -3,6 +3,7 @@ import { ref, computed } from "vue";
 import OekakiTop from "../organisms/OekakiTop.vue";
 import OekakiMiddle from "../organisms/OekakiMiddle.vue";
 import OekakiBottom from "../organisms/OekakiBottom.vue";
+import { IGetSessionsResponse } from "../composables/interface/IGetSessionsResponse";
 
 // お題を管理する状態管理変数
 const theme = ref("")
@@ -23,10 +24,10 @@ const sessionComputed = computed({
 })
 
 // 過去のセッション一覧を保持する状態管理変数
-const sessionList = ref(new Array<string>())
+const sessionList = ref(<IGetSessionsResponse>{})
 const sessionListComputed = computed({
     get: () => sessionList.value,
-    set: (value: Array<string>) => {
+    set: (value: any) => {
         sessionList.value = value
     }
 })
