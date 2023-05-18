@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { toRefs } from "vue"
+import  useGetThemesApi  from "../composables/useGetThemesApi.ts"
 
 // pages/Oekaki.vueから受け取る状態管理変
 interface Props {
@@ -28,12 +29,18 @@ const themeComputed = computed({
     }
 })
 
+const { randomTheme } = useGetThemesApi()
+
+const click = async () => {
+    themeComputed.value = await randomTheme()
+}
 
 </script>
 
 <template>
     <H2>OekakiTop</H2>
-    {{ JSON.stringify(theme) }}
+    <button @click="click">buttun</button>
+    {{ theme }}
     {{ session }}
     {{ sessionList }}
 </template>

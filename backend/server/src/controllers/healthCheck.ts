@@ -1,6 +1,7 @@
 import {Controller, Inject, Service} from "@tsed/di";
 import {PathParams} from "@tsed/platform-params";
 import {Get} from "@tsed/schema";
+import {FibonacciService} from "../services/healthCheck/FibonacciService";
 import {IFibonacciService} from "../services/healthCheck/interface/IFibonacciService";
 
 @Controller('/')
@@ -8,7 +9,7 @@ import {IFibonacciService} from "../services/healthCheck/interface/IFibonacciSer
 export class HealthCheck {
 
     @Inject()
-    private fibonacciService: IFibonacciService
+    private fibonacciService: FibonacciService
 
     @Get('/')
     async healthCheck(): Promise<string> {
