@@ -48,6 +48,7 @@ const sessionListComputed = computed({
 const { randomTheme } = useGetThemesApi()
 const { getSessionList } = useGetSessionsApi()
 
+// 初期化時にテーマとセッションリストを取得する
 onMounted(async () => {
     themeComputed.value = await randomTheme()
     sessionListComputed.value = await getSessionList()
