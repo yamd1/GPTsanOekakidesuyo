@@ -2,6 +2,8 @@
 import { computed } from 'vue';
 import { toRefs } from 'vue';
 import useGrid from '../composables/useGrid'
+import Button from '../molecules/Button.vue'
+import usePostSessionApi from '../composables/usePostSessionApi'
 
 interface Props {
     binaries: string
@@ -22,11 +24,11 @@ const binariesComputed = computed({
     }
 })
 
-const { isDrawing, grid, gridDataToString, startDrawing, draw, stopDrawing } = useGrid()
+const { grid, gridDataToString, startDrawing, draw, stopDrawing } = useGrid()
 
-// TODO: gridDataToStringを発火させるタイミングを決める
-// 1，描画が終わったタイミングで毎回文字列に変換して、binariesで保持する
-// 2，OekakiBottomコンポーネントで「完成」ボタンが押下されたタイミングで文字列に変換する
+const callPostSessionApi = () => {
+    const { response } = usePostSessionApi(gridDataToString)
+}
 
 </script>
 
@@ -41,6 +43,9 @@ const { isDrawing, grid, gridDataToString, startDrawing, draw, stopDrawing } = u
                 </div>
             </div>
         </div>
+    </div>
+    <div>
+        <Button v-model:event="callPostSessionApi"></Button>
     </div>
 </template>
 
