@@ -32,15 +32,6 @@ const sessionListComputed = computed({
     }
 })
 
-// 入力されたバイナリを保持する状態管理変数
-const binaries = ref("")
-const binariesComputed = computed({
-    get: () => binaries.value,
-    set: (value: string) => {
-        binaries.value = value
-    }
-})
-
 // OpenAiから返却された結果を保持する状態管理変数
 const openAiResult = ref("")
 const openAiResultComputed = computed({
@@ -55,7 +46,8 @@ const openAiResultComputed = computed({
 <template>
     <H1>GPTさんお絵かきですよ</H1>
     <OekakiTop v-model:theme="themeComputed" v-model:session="sessionComputed" v-model:sessionList="sessionListComputed" />
-    <OekakiMiddle v-model:binaries="binariesComputed" />
-    <OekakiBottom v-model:binaries="binariesComputed" v-model:openAiResult="openAiResultComputed" />
+    <OekakiMiddle v-model:openAiResult="openAiResultComputed" />
+    <OekakiBottom v-model:openAiResult="openAiResultComputed" />
+    {{ openAiResult }}
 </template>
 
