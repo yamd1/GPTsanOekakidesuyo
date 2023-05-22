@@ -6,34 +6,36 @@ import Button from '../molecules/Button.vue'
 import usePostSessionApi from '../composables/usePostSessionApi'
 
 interface Props {
-    binaries: string
+    openAiResult: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    binaries: ""
+    openAiResult: ""
 })
 
-const { binaries } = toRefs(props)
+const { openAiResult } = toRefs(props)
 
-const emit = defineEmits(["update:binaries"])
+const emit = defineEmits(["update:openAiResult"])
 
-const binariesComputed = computed({
-    get: () => binaries.value,
+const openAiResultComputed = computed({
+    get: () => openAiResult.value,
     set: (value: string) => {
-        emit("update:binaries", value)
+        emit("update:openAiResult", value)
     }
 })
 
 const { grid, gridDataToString, startDrawing, draw, stopDrawing } = useGrid()
 
-const callPostSessionApi = () => {
-    const { response } = usePostSessionApi(gridDataToString)
+const callPostSessionApi = async () => {
+    const { response } = await usePostSessionApi(gridDataToString)
+    console.log(response)
+    console.log(response.value)
+    openAiResult.value = response.value
 }
 
 </script>
 
 <template>
-    <H2>OekakiMiddle</H2>
     <div class="grid-button-container">
         <div class="grid-container">
             <div v-for="(row, rowIndex) in grid" :key="rowIndex" class="grid-row">
