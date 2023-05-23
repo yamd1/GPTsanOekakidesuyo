@@ -45,9 +45,20 @@ const openAiResultComputed = computed({
 
 <template>
     <H1>GPTさんお絵かきですよ</H1>
-    <OekakiTop v-model:theme="themeComputed" v-model:session="sessionComputed" v-model:sessionList="sessionListComputed" />
-    <OekakiMiddle v-model:openAiResult="openAiResultComputed" />
-    <OekakiBottom v-model:openAiResult="openAiResultComputed" />
-    {{ openAiResult }}
+    <div class="top-container">
+        <OekakiTop v-model:theme="themeComputed" v-model:session="sessionComputed"
+            v-model:sessionList="sessionListComputed" />
+    </div>
+    <div>
+        <OekakiMiddle v-model:openAiResult="openAiResultComputed" />
+    </div>
+    <div>
+        <OekakiBottom v-model:openAiResult="openAiResultComputed" />
+    </div>
 </template>
 
+<style scoped>
+.top-container {
+    margin-bottom: 10px;
+}
+</style>
