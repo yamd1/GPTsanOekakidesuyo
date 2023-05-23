@@ -22,3 +22,20 @@ const onClick = () => {
         <button @click="onClick">完成</button>
     </div>
 </template>
+
+<style scoped>
+button {
+    margin: 15px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+</style>

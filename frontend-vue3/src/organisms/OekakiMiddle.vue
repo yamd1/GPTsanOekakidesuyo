@@ -28,9 +28,7 @@ const { grid, gridDataToString, startDrawing, draw, stopDrawing } = useGrid()
 
 const callPostSessionApi = async () => {
     const { response } = await usePostSessionApi(gridDataToString)
-    console.log(response)
-    console.log(response.value)
-    openAiResult.value = response.value
+    openAiResultComputed.value = response.value
 }
 
 </script>
