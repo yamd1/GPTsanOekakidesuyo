@@ -7,15 +7,17 @@ import usePostSessionApi from '../composables/usePostSessionApi'
 
 interface Props {
     openAiResult: string
+    isLoading: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    openAiResult: ""
+    openAiResult: "",
+    isLoading: false
 })
 
-const { openAiResult } = toRefs(props)
+const { openAiResult, isLoading } = toRefs(props)
 
-const emit = defineEmits(["update:openAiResult"])
+const emit = defineEmits(["update:openAiResult", "update:isLoading"])
 
 const openAiResultComputed = computed({
     get: () => openAiResult.value,
@@ -24,11 +26,20 @@ const openAiResultComputed = computed({
     }
 })
 
+const isLoadingComputed = computed({
+    get: () => isLoading.value,
+    set: (value: boolean) => {
+        emit("update:isLoading", value)
+    }
+})
+
 const { grid, gridDataToString, startDrawing, draw, stopDrawing } = useGrid()
 
 const callPostSessionApi = async () => {
+    isLoadingComputed.value = true
     const { response } = await usePostSessionApi(gridDataToString)
     openAiResultComputed.value = response.value
+    isLoadingComputed.value = false
 }
 
 </script>
