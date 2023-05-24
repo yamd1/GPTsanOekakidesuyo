@@ -16,7 +16,11 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 ---
 ## 設定方法
 
-### Frontend
+### Frontend (vue-cli/Vite)
+- (初回のみ)`/frontend-vue3`ディレクトリ内で、`npm ci`を実行
+- `npm run dev`を実行
+
+### Frontend (SDKバージョン)
 - `npm i -g http-server` を実行してhttp-serverをインストール。
 - `/frontend` ディレクトリ内で `http-server` を実行。
 
@@ -28,6 +32,13 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 - (初回のみ)`docker exec -it server sh` でコンテナ内に入る。
 - (初回のみ)データベースセットアップのため、`npx prisma migrate` `npx prisma generate dev` `npm run seed` を実行。
 - OpenAI Chat のシステム設定を変更したい場合は、`/backend/server/.env` ファイルの `OPENAI_CHAT_SYSTEM_MESSAGE` を変更する。
+
+---
+## Frontend Disign
+
+### コンポーネント
+
+![コンポーネント分割 概要](./docs/component_design.png)
 
 ---
 ## Database Design
