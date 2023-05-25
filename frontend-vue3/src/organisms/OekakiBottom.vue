@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 import { toRefs } from 'vue';
 
-
 interface Props {
     openAiResult: string
 }

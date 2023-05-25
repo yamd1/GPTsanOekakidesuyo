@@ -34,7 +34,7 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 - OpenAI Chat のシステム設定を変更したい場合は、`/backend/server/.env` ファイルの `OPENAI_CHAT_SYSTEM_MESSAGE` を変更する。
 
 ---
-## Frontend Disign
+## Frontend Disign (frontend-vue3)
 
 ### コンポーネント
 
@@ -83,7 +83,7 @@ OpenAI APIをターゲットに、リクエストを送信するためのProxy�
 
 | エンドポイント | リクエストタイプ | パラメーター | レスポンス |
 |--------------|--------------|-----------|---------|
-| `/session/:id` | `GET` | `PathParam=id` | { <br> "session": { <br> "id": number, <br> "name": string, <br> "messages": { <br> "id": number, <br> "message": string, <br> }[], <br> "created_at": Date, <br> "updated_at": Date \| null  <br> } <br> } |
+| `/session/:id` | `GET` | `PathParam=id` | { <br> "session": { <br> "id": number, <br> "name": string, <br> "messages": { <br> "id": number, <br> "message": string, <br> }, <br> "created_at": Date, <br> "updated_at": Date \| null  <br> } <br> } |
 | `/session` | `POST` | { <br> "id": number \| undefined, <br> "message": string <br>} | { <br> "session": {<br> "id": number, <br> "name": string, <br> "response": string, <br>  } <br> } |
 
 
