@@ -15,6 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
     isLoading: false
 })
 
+// OpenAiからのレスポンスとリクエスト応答状態を表すフラグ変数
 const { openAiResult, isLoading } = toRefs(props)
 
 const emit = defineEmits(["update:openAiResult", "update:isLoading"])
@@ -33,8 +34,10 @@ const isLoadingComputed = computed({
     }
 })
 
+// お絵かき用グリッド制御用の変数及び関数(composables/useGridにて定義)
 const { grid, gridDataToString, startDrawing, draw, stopDrawing } = useGrid()
 
+// OpenAIにリクエストを送信。応答までの間はローディング画面を表示し、画面をロックする
 const callPostSessionApi = async () => {
     isLoadingComputed.value = true
     const { response } = await usePostSessionApi(gridDataToString)

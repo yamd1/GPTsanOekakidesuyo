@@ -3,7 +3,8 @@ import { toRefs, onMounted, computed } from "vue"
 import useGetThemesApi from "../composables/useGetThemesApi"
 import useGetSessionsApi from "../composables/useGetSessionsApi"
 import Select from "../molecules/Select.vue";
-import { IGetSessionsResponse } from "../composables/interface/IGetSessionsResponse";
+import { IGetSessionsResponse, IGetSessions } from "../composables/interface/IGetSessionsResponse";
+import { ref } from "vue";
 
 // pages/Oekaki.vueから受け取る状態管理変
 interface Props {
@@ -24,6 +25,7 @@ const { theme, session, sessionList } = toRefs(props)
 // 変更時にpages/Oekaki.vueに通知するためのイベント
 const emit = defineEmits(["update:theme", "update:session", "update:sessionList"])
 
+// Mountedフックでテーマを更新するための状態管理変数
 const themeComputed = computed({
     get: () => theme.value,
     set: (value: string) => {
@@ -45,6 +47,8 @@ const sessionListComputed = computed({
     }
 })
 
+const list = ref(new Array<string>())
+
 const { randomTheme } = useGetThemesApi()
 const { getSessionList } = useGetSessionsApi()
 
@@ -52,6 +56,9 @@ const { getSessionList } = useGetSessionsApi()
 onMounted(async () => {
     themeComputed.value = await randomTheme()
     sessionListComputed.value = await getSessionList()
+    list.value = sessionList.value.sessions.map((value: IGetSessions) => {
+        return value.name
+    })
 })
 
 </script>
@@ -61,7 +68,7 @@ onMounted(async () => {
         お題：{{ theme }}
     </div>
     <div>
-        <Select v-model:session="sessionComputed" v-model:sessionList="sessionListComputed"></Select>
+        <Select v-model:selectedItem="sessionComputed" v-model:list="list"></Select>
     </div>
 </template>
 

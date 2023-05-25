@@ -1,32 +1,34 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { ref, toRefs } from "vue";
-import { IGetSessionsResponse } from "../composables/interface/IGetSessionsResponse";
+import { toRefs } from "vue";
+
 interface Props {
-  sessionList: IGetSessionsResponse
-  session: string
+  list: Array<string>
+  selectedItem: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  sessionList: () => <IGetSessionsResponse>{},
-  session: ""
+  list: () => new Array<string>(),
+  selectedItem: ""
 })
 
-const { sessionList, session } = toRefs(props)
+// セレクトボックス・選択された値を保持するための変数
+const { list, selectedItem } = toRefs(props)
 
-const emit = defineEmits(["update:session"])
+const emit = defineEmits(["update:selectedItem"])
 
-const sessionComputed = computed({
-  get: () => session.value,
+// 選択された値を親コンポーネントへ渡すための状態管理変数
+const selectedItemComputed = computed({
+  get: () => selectedItem.value,
   set: (value: string) => {
-    emit("update:session", value)
+    emit("update:selectedItem", value)
   }
 })
 
 </script>
 
 <template>
-  <select v-model="sessionComputed">
-    <option v-for="session in sessionList.sessions" :value="session.id">{{ session.name }}</option>
+  <select v-model="selectedItemComputed">
+    <option v-for="item in list" :value="item">{{ item }}</option>
   </select>
 </template>

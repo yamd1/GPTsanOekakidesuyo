@@ -19,6 +19,7 @@ const onClick = () => {
 
 <template>
     <div>
+        <!-- 更に汎用化させる場合、「完成」の文字やボタンのスタイルもPropsで受け取るようにする -->
         <button @click="onClick">完成</button>
     </div>
 </template>
