@@ -1,7 +1,7 @@
-import {Service} from "@tsed/di"
+import {Injectable, ProviderType, Service} from "@tsed/di"
 import {IFibonacciService} from "./interface/IFibonacciService"
 
-@Service()
+@Injectable({type: ProviderType.PROVIDER})
 export class FibonacciService implements IFibonacciService {
 
     /**

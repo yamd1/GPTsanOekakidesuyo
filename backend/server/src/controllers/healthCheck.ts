@@ -1,15 +1,15 @@
-import {Controller, Inject, Service} from "@tsed/di";
+import {Controller, Inject, Injectable, ProviderType, Service} from "@tsed/di";
 import {PathParams} from "@tsed/platform-params";
 import {Get} from "@tsed/schema";
 import {FibonacciService} from "../services/healthCheck/FibonacciService";
 import {IFibonacciService} from "../services/healthCheck/interface/IFibonacciService";
 
 @Controller('/')
-@Service()
+@Injectable({type: ProviderType.CONTROLLER})
 export class HealthCheck {
 
-    @Inject()
-    private fibonacciService: FibonacciService
+    @Inject(FibonacciService)
+    private fibonacciService: IFibonacciService
 
     @Get('/')
     async healthCheck(): Promise<string> {

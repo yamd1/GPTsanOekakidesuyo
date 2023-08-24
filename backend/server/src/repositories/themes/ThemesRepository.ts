@@ -1,9 +1,10 @@
 import {PrismaClient, PrismaPromise, themes} from "@prisma/client";
-import {Service} from "@tsed/di";
+import {Injectable, ProviderType, Service} from "@tsed/di";
+import {IThemesRepository} from "./interface/IThemesRepository";
 
 
-@Service()
-export class ThemesRepository {
+@Injectable({type: ProviderType.PROVIDER})
+export class ThemesRepository implements IThemesRepository {
     findAll(prisma: PrismaClient): PrismaPromise<Array<themes>> {
         return prisma.themes.findMany({})
     }

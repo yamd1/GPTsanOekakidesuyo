@@ -1,11 +1,12 @@
 import {PrismaClient, PrismaPromise, sessions} from "@prisma/client";
-import {Service} from "@tsed/di";
+import {Injectable, ProviderType} from "@tsed/di";
 import {IOpenAiMessage} from "../../apis/interface/IOpenAiMessage";
 import {PostSessionRequest} from "../../requests/session/PostSessionRequest";
 import {messagesWithSession} from "../messages/interface/IMessages";
+import {ISessionsRepository} from "./interface/ISessionsRepositoy";
 
-@Service()
-export class SessionsRepository {
+@Injectable({type: ProviderType.PROVIDER})
+export class SessionsRepository implements ISessionsRepository {
 
     /**
      *

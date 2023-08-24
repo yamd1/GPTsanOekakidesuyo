@@ -4,10 +4,13 @@ import {BadRequest} from "@tsed/exceptions";
 import {IOpenAiMessage} from "../../apis/interface/IOpenAiMessage";
 import {OpenAiRequest} from "../../apis/requests/OpenAiRequest";
 import {OpenAiResponse} from "../../apis/responses/OpenAiResponse";
+import {IOpenAiService} from "../../apis/services/interface/IOpenAiService";
 import {OpenAiService} from "../../apis/services/OpenAiService";
 import {ErrorConst} from "../../Consts/ErrorConst";
 import {messagesWithSession} from "../../repositories/messages/interface/IMessages";
+import {IMessagesRepository} from "../../repositories/messages/interface/IMessagesRepository";
 import {MessagesRepository} from "../../repositories/messages/MessagesRepository";
+import {ISessionsRepository} from "../../repositories/sessions/interface/ISessionsRepositoy";
 import {SessionsRepository} from "../../repositories/sessions/SessionsRepository";
 import {PostSessionRequest} from "../../requests/session/PostSessionRequest";
 import {PostSession} from "../../responses/session/PostSession";
@@ -17,12 +20,12 @@ import {IPostSessionService, RoleContent} from "./interface/IPostSessionService"
 @Service()
 export class PostSessionService implements IPostSessionService {
 
-    @Inject()
-    private sessionsRepository: SessionsRepository
-    @Inject()
-    private messagesRepository: MessagesRepository
-    @Inject()
-    private openAiService: OpenAiService
+    @Inject(SessionsRepository)
+    private sessionsRepository: ISessionsRepository
+    @Inject(MessagesRepository)
+    private messagesRepository: IMessagesRepository
+    @Inject(OpenAiService)
+    private openAiService: IOpenAiService
 
 
     /**
