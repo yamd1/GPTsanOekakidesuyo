@@ -1,19 +1,17 @@
 import {PrismaClient, themes} from "@prisma/client";
-import {Inject, Service} from "@tsed/di";
+import {Inject, Injectable, ProviderType} from "@tsed/di";
+import {IThemesRepository} from "../../repositories/themes/interface/IThemesRepository";
 import {ThemesRepository} from "../../repositories/themes/ThemesRepository";
 import {GetThemesResponse} from "../../responses/themes/GetThemesResponse";
 import {Theme} from "../../responses/themes/Theme";
 import {IGetThemesService} from "./interface/IGetThemesService";
 
 
-@Service()
+@Injectable({type: ProviderType.PROVIDER})
 export class GetThemesService implements IGetThemesService {
 
-    private themesRepository: ThemesRepository
-    constructor(@Inject() themesRepository: ThemesRepository) {
-        this.themesRepository = themesRepository
-    }
-
+    @Inject(ThemesRepository)
+    private themesRepository: IThemesRepository
 
     /**
      * themesテーブルの全レコードを取得し、返却する

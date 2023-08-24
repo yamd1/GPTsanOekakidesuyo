@@ -1,17 +1,18 @@
 import {PrismaClient, sessions} from "@prisma/client";
-import {Inject, Service} from "@tsed/di";
+import {Inject, Injectable, ProviderType, Service} from "@tsed/di";
 import {GetSessionResponse} from "../../responses/session/GetSessionResponse";
 import {Message} from "../../responses/message/Message";
 import {GetSession} from "../../responses/session/GetSession";
 import {IGetsessionService} from "./interface/IGetSessionService";
 import {SessionsRepository} from "../../repositories/sessions/SessionsRepository";
 import {messagesWithSession} from "../../repositories/messages/interface/IMessages";
+import {ISessionsRepository} from "../../repositories/sessions/interface/ISessionsRepositoy";
 
-@Service()
+@Injectable({type: ProviderType.PROVIDER})
 export class GetSessionService implements IGetsessionService {
 
-    @Inject()
-    private sessionsRepository: SessionsRepository
+    @Inject(SessionsRepository)
+    private sessionsRepository: ISessionsRepository
 
     /**
      * QueryParamで受け取ったidをベースにレコードを取得

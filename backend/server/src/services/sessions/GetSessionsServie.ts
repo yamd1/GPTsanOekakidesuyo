@@ -1,15 +1,16 @@
 import {PrismaClient, sessions} from "@prisma/client";
-import {Inject, Service} from "@tsed/di";
+import {Inject, Injectable, ProviderType} from "@tsed/di";
+import {ISessionsRepository} from "../../repositories/sessions/interface/ISessionsRepositoy";
 import {SessionsRepository} from "../../repositories/sessions/SessionsRepository";
 import {GetSessions} from "../../responses/sessions/GetSessions";
 import {GetSessionsResponse} from "../../responses/sessions/GetSessionsResponse";
 import {IGetSessionsService} from "./interface/IGetSessionsService";
 
-@Service()
+@Injectable({type: ProviderType.PROVIDER})
 export class GetSessionsService implements IGetSessionsService {
 
-    @Inject()
-    private sessionsRepository: SessionsRepository
+    @Inject(SessionsRepository)
+    private sessionsRepository: ISessionsRepository
 
     /**
      * セッション一覧を取得する 
